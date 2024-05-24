@@ -8,6 +8,8 @@ class BlocService extends Cubit<int> {
   }
 
   kurangData() {
-    emit(state - 1);
+    if (state > 0) {
+      emit(state - 1);
+    }
   }
 }
