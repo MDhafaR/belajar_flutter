@@ -9,44 +9,66 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Belajar Cubit'),
-        ),
-        body: SafeArea(
-          child: Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              BlocBuilder(
-                bloc: blocService,
-                builder: (context, state) {
-                  return Text(
-                    "$state",
-                    style: const TextStyle(fontSize: 30),
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        blocService.tambahData();
-                      },
-                      icon: const Icon(Icons.add)),
-                  IconButton(
-                      onPressed: () {
-                        blocService.kurangData();
-                      },
-                      icon: const Icon(Icons.remove)),
-                ],
-              )
-            ],
-          )),
-        ),
-      );
+      appBar: AppBar(
+        title: const Text('Belajar Cubit'),
+      ),
+      body: SafeArea(
+        child: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // bloc consumer adalah gabungan dari 
+            // penggunaan bloc builder dan bloc listener
+            BlocConsumer<BlocService, int>(
+              bloc: blocService,
+              buildWhen: (previous, current) {
+                if (current >= 5) {
+                  return true;
+                } else {
+                  return false;
+                }
+              },
+              builder: (context, state) {
+                return Text(
+                  "$state",
+                  style: const TextStyle(fontSize: 30),
+                );
+              },
+              listenWhen: (previous, current) {
+                if (current % 2 == 0) {
+                  return true;
+                } else {
+                  return false;
+                }
+              },
+              listener: (context, state) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("data ini genap ke $state"),
+                  duration: Duration(seconds: 1),
+                ));
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      blocService.tambahData();
+                    },
+                    icon: const Icon(Icons.add)),
+                IconButton(
+                    onPressed: () {
+                      blocService.kurangData();
+                    },
+                    icon: const Icon(Icons.remove)),
+              ],
+            )
+          ],
+        )),
+      ),
+    );
   }
 }
