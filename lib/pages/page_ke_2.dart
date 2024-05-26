@@ -1,4 +1,4 @@
-import 'package:belajar_flutter_github/bloc/bloc_service.dart';
+import 'package:belajar_flutter_github/bloc/count_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +20,7 @@ class Page2 extends StatelessWidget {
       ),
       body: Center(
         child: BlocBuilder(
-          bloc: BlocProvider.of<BlocService>(context),
+          bloc: BlocProvider.of<CountBloc>(context),
           builder: (context, state) {
             return Text(
             "$state",

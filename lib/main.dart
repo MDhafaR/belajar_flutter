@@ -1,4 +1,5 @@
-import 'package:belajar_flutter_github/bloc/bloc_service.dart';
+import 'package:belajar_flutter_github/bloc/count_bloc.dart';
+import 'package:belajar_flutter_github/bloc/theme_bloc.dart';
 import 'package:belajar_flutter_github/pages/home.dart';
 import 'package:belajar_flutter_github/pages/page_ke_2.dart';
 import 'package:flutter/material.dart';
@@ -13,21 +14,26 @@ class BelajarCubit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocService blocService = BlocService();
+    CountBloc blocCount = CountBloc();
+    ThemeBloc themeBloc = ThemeBloc();
 
 
-    return BlocProvider(
-      create: (context) => blocService,
-      child: MaterialApp(
-          routes: {
-            "/" :(context) => BlocProvider.value(
-              value: blocService,
-              child: const Home()),
-            "page2" :(context) => BlocProvider.value(
-              value: blocService,
-              child: const Page2())
-          },
-        )
+    return MultiBlocProvider(
+      providers: [
+      BlocProvider(create: (context) => blocCount,),
+      BlocProvider(create: (context) => themeBloc,),
+      ],
+      child: BlocBuilder<ThemeBloc, bool>(
+        builder: (context, state) {
+          return MaterialApp(
+              theme: state == true ? ThemeData.light() : ThemeData.dark(),
+                routes: {
+                  "/" :(context) => const Home(),
+                  "page2" :(context) => const Page2()
+                },
+              );
+        },
+      )
     );
   }
 }

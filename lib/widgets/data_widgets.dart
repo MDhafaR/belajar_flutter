@@ -1,4 +1,4 @@
-import 'package:belajar_flutter_github/bloc/bloc_service.dart';
+import 'package:belajar_flutter_github/bloc/count_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,10 +7,10 @@ class DataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocService blocService = BlocProvider.of<BlocService>(context);
+    CountBloc blocCount = BlocProvider.of<CountBloc>(context);
 
-    return BlocConsumer<BlocService, int>(
-      bloc: blocService,
+    return BlocConsumer<CountBloc, int>(
+      bloc: blocCount,
       listenWhen: (previous, current) {
         if (current % 2 == 0 && current >= 0 && current != 0) {
           return true;
@@ -39,7 +39,7 @@ class DataWidget extends StatelessWidget {
               color: Colors.black,
               child: InkWell(
                 onTap: () {
-                  blocService.kurangData();
+                  blocCount.kurangData();
                 },
                 borderRadius: BorderRadius.circular(15),
                 child: const SizedBox(
@@ -68,7 +68,7 @@ class DataWidget extends StatelessWidget {
               color: Colors.black,
               child: InkWell(
                 onTap: () {
-                  blocService.tambahData();
+                  blocCount.tambahData();
                 },
                 borderRadius: BorderRadius.circular(15),
                 child: const SizedBox(

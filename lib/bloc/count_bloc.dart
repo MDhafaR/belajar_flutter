@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 
-class BlocService extends Cubit<int> {
-  BlocService() : super(0);
+class CountBloc extends Cubit<int> {
+  CountBloc() : super(0);
 
   tambahData() {
     emit(state + 1);
