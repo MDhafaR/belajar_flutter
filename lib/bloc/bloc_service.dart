@@ -1,13 +1,16 @@
+import 'package:belajar_flutter_github/models/user.dart';
 import 'package:bloc/bloc.dart';
 
-class BlocService extends Cubit<int> {
-  BlocService() : super(0);
+class BlocService extends Cubit<User> {
+  BlocService() : super(User(name: "-", age: 0));
 
-  tambahData() {
-    emit(state + 1);
+  ubahNama(String name) {
+    emit(User(name: name, age: state.age));
   }
 
-  kurangData() {
-    emit(state - 1);
+  ubahUmur(int age) {
+    if (age >= 0) {
+      emit(User(name: state.name, age: age));
+    }
   }
 }
