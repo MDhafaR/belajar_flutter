@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
         title: const Text("belajar bloc selector"),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -34,17 +34,17 @@ class Home extends StatelessWidget {
                 return Text("Umur : $state Tahun");
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextField(
               onChanged: (value) => blocService.ubahNama(value),
-              decoration: InputDecoration(border: OutlineInputBorder()),
+              decoration: const InputDecoration(border: OutlineInputBorder()),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Center(child: Text("Atur umur mu")),
+            const Center(child: Text("Atur umur mu")),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -52,12 +52,12 @@ class Home extends StatelessWidget {
                     onPressed: () {
                       blocService.ubahUmur(blocService.state.age! - 1);
                     },
-                    icon: Icon(Icons.remove)),
+                    icon: const Icon(Icons.remove)),
                 IconButton(
                     onPressed: () {
                       blocService.ubahUmur(blocService.state.age! + 1);
                     },
-                    icon: Icon(Icons.add)),
+                    icon: const Icon(Icons.add)),
               ],
             )
           ],
