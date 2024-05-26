@@ -1,5 +1,6 @@
 import 'package:belajar_flutter_github/bloc/bloc_service.dart';
 import 'package:belajar_flutter_github/pages/home.dart';
+import 'package:belajar_flutter_github/pages/page_ke_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,13 +13,21 @@ class BelajarCubit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // jika bloc provider ingin digunakan, 
-    // dia harus berada di atas widget sebelum sang bloc provider itu digunakan
+    BlocService blocService = BlocService();
+
+
     return BlocProvider(
-      create: (context) => BlocService(),
-      child: const MaterialApp(
-        home: Home()
-      ),
+      create: (context) => blocService,
+      child: MaterialApp(
+          routes: {
+            "/" :(context) => BlocProvider.value(
+              value: blocService,
+              child: const Home()),
+            "page2" :(context) => BlocProvider.value(
+              value: blocService,
+              child: const Page2())
+          },
+        )
     );
   }
 }
