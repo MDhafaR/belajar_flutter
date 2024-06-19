@@ -44,14 +44,16 @@ class _MyAppState extends State<MyApp> {
                         children: [
                           ElevatedButton(
                               onPressed: () {
-                                context.read<CounterEvent>();
+                                context.read<CounterBloc>().add(CounterEvent.increment);
                               },
                               child: const Text("Increment")),
                           const SizedBox(
                             width: 20,
                           ),
                           ElevatedButton(
-                              onPressed: () {}, child: const Text("Decrement")),
+                              onPressed: () {
+                                context.read<CounterBloc>().add(CounterEvent.decrement);
+                              }, child: const Text("Decrement")),
                         ],
                       )
                     ],
