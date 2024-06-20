@@ -7,7 +7,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
     on<CounterEvent>((event, emit) {
       if (event == CounterEvent.increment) {
         emit(state + 1);
-      } else {
+      } else if(state > 0) {
         emit(state - 1);
       }
     });
