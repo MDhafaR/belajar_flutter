@@ -1,10 +1,22 @@
-import 'package:belajar_flutter_github/bloc/product_bloc.dart';
+import 'package:belajar_flutter_github/cubit/product_cubit.dart';
 import 'package:belajar_flutter_github/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+        () => BlocProvider.of<ProductCubit>(context).getProductData());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +27,7 @@ class MainScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<ProductBloc, ProductState>(
+        child: BlocBuilder<ProductCubit, ProductState>(
           builder: (context, state) {
             if (state is ProductLoading) {
               return const Center(child: CircularProgressIndicator());
@@ -32,12 +44,19 @@ class MainScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final product = products[index];
                   return GridTile(
-                    footer: Container(
-                      color: Colors.black38,
-                      child: Text(product.title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 25, color: Colors.white),),
-                    ),
-                    child: Image.network(product.imageUrl, fit: BoxFit.cover,)
-                    );
+                      footer: Container(
+                        color: Colors.black38,
+                        child: Text(
+                          product.title,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 25, color: Colors.white),
+                        ),
+                      ),
+                      child: Image.network(
+                        product.imageUrl,
+                        fit: BoxFit.cover,
+                      ));
                 },
               );
             }

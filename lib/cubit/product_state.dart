@@ -1,4 +1,4 @@
-part of 'product_bloc.dart';
+part of 'product_cubit.dart';
 
 @immutable
 sealed class ProductState {}
