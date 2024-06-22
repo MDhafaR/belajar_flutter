@@ -19,41 +19,59 @@ class MyApp extends StatelessWidget {
           ),
           body: Center(
             child: BlocProvider(
-              create: (context) => CounterBloc(),
-              child: BlocBuilder<CounterBloc, int>(
-                builder: (context, state) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "$state",
-                        style: TextStyle(fontSize: 50),
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                context.read<CounterBloc>().add(CounterEvent.increment);
-                              },
-                              child: const Text("Increment")),
-                          const SizedBox(
-                            width: 20,
+                create: (context) => DataBloc(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    BlocBuilder<DataBloc, StateResult>(
+                      builder: (context, state) {
+                        String? hasil;
+                        if (state is StateInit) {
+                          hasil = state.initial;
+                        }
+                        if (state is StateLoading) {
+                          return CircularProgressIndicator();
+                        }
+                        if (state is StateSuccess) {
+                          hasil = state.result;
+                        }
+                        return Container(
+                          width: 300,
+                          child: Text(
+                            "$hasil",
+                            style: TextStyle(fontSize: 35),
+                            textAlign: TextAlign.center,
                           ),
-                          ElevatedButton(
-                              onPressed: () {
-                                context.read<CounterBloc>().add(CounterEvent.decrement);
-                              }, child: const Text("Decrement")),
-                        ],
-                      )
-                    ],
-                  );
-                },
-              ),
-            ),
+                        );
+                      },
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Builder(
+                      builder: (context) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  context.read<DataBloc>().add(GetData());
+                                },
+                                child: const Text("get data")),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  BlocProvider.of<DataBloc>(context).add(NoData());
+                                },
+                                child: const Text("no data")),
+                          ],
+                        );
+                      }
+                    )
+                  ],
+                )),
           ),
         );
       },
