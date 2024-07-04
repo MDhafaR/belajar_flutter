@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
                 builder: (context) {
                   return MaineScreen(state.username);
                 },
-              ));
+              )); 
             }
           },
           builder: (context, state) {
